@@ -9,10 +9,10 @@ module SitePrism
 
     attr_reader :root_element, :parent
 
-    def initialize(parent, root_element)
+    def initialize(parent, root_element, &block)
       @parent = parent
       @root_element = root_element
-      within { yield(self) } if block_given?
+      within(&block) if block_given?
     end
 
     def visible?
