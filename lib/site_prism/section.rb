@@ -12,7 +12,7 @@ module SitePrism
     def initialize(parent, root_element)
       @parent = parent
       @root_element = root_element
-      Capybara.within(@root_element) { yield(self) } if block_given?
+      within { yield(self) } if block_given?
     end
 
     def visible?
@@ -37,6 +37,10 @@ module SitePrism
         candidate_page = candidate_page.parent
       end
       candidate_page
+    end
+
+    def within
+      Capybara.within(@root_element) { yield(self) }
     end
 
     private

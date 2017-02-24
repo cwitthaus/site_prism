@@ -68,9 +68,11 @@ describe SitePrism::Section do
     expect(SitePrism::Section).to respond_to :elements
   end
 
-  it 'passes a given block to Capybara.within' do
-    expect(Capybara).to receive(:within).with('div')
-    SitePrism::Section.new(a_page, 'div') { 1 + 1 }
+  it 'passes a given block to #within' do
+    block_variable = 5
+    expect_any_instance_of(SitePrism::Section).to receive(:within).and_yield
+    SitePrism::Section.new(a_page, 'div') { block_variable = 7 }
+    expect(block_variable).to eq(7)
   end
 
   it 'does not require a block' do
@@ -84,6 +86,24 @@ describe SitePrism::Section do
     it 'responds to javascript methods' do
       expect(section).to respond_to :execute_script
       expect(section).to respond_to :evaluate_script
+    end
+
+    it 'responds to within method' do
+      expect(section).to respond_to :within
+    end
+
+    describe '#within' do
+      it 'passes a given block to Capybara.within' do
+        expect(Capybara).to receive(:within).with('locator')
+        section.within { 1 + 1 }
+      end
+
+      it 'executes the block' do
+        block_variable = 5
+        expect(Capybara).to receive(:within).with('locator').and_yield
+        section.within { block_variable = 7 }
+        expect(block_variable).to eq(7)
+      end
     end
   end
 end
