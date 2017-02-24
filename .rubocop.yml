@@ -30,3 +30,7 @@ MethodLength:
 
 Style/RegexpLiteral:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*_spec.rb'

@@ -142,6 +142,6 @@ Then(/^I can wait a variable time and pass specific parameters$/) do
   @test_site.home.wait_for_lots_of_links(0.1, count: 2)
   Capybara.using_wait_time 0.3 do
     # intentionally wait and pass nil to force this to cycle
-    expect(@test_site.home.wait_for_lots_of_links(nil, count: 198_108_14)).to be false
+    expect(@test_site.home.wait_for_lots_of_links(nil, count: 19_810_814)).to be false
   end
 end
