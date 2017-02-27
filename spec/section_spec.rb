@@ -70,7 +70,7 @@ describe SitePrism::Section do
 
   it 'passes a given block to #within' do
     block_variable = 5
-    expect_any_instance_of(SitePrism::Section).to receive(:within).and_yield
+    expect_any_instance_of(Capybara).to receive(:within).and_yield
     SitePrism::Section.new(a_page, 'div') { block_variable = 7 }
     expect(block_variable).to eq(7)
   end
@@ -88,16 +88,7 @@ describe SitePrism::Section do
       expect(section).to respond_to :evaluate_script
     end
 
-    it 'responds to within method' do
-      expect(section).to respond_to :within
-    end
-
     describe '#within' do
-      it 'passes a given block to Capybara.within' do
-        expect(Capybara).to receive(:within).with('locator')
-        section.within { 1 + 1 }
-      end
-
       it 'executes the block' do
         block_variable = 5
         expect(Capybara).to receive(:within).with('locator').and_yield
